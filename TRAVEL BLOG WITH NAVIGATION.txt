@@ -1,0 +1,170 @@
+import React from "react";
+import Navbar from "@/components/Navbar";
+import HeroSection from "@/components/HeroSection";
+import BlogCard from "@/components/BlogCard";
+import indiaImg from "@/assets/india.jpg";
+import dubaiImg from "@/assets/dubai.jpg";
+import parisImg from "@/assets/paris.jpg";
+import srilankaImg from "@/assets/srilanka.jpg";
+import kyotoImg from "@/assets/kyoto.jpg";
+import { Compass, Instagram, Twitter, Mail } from "lucide-react";
+
+const stories = [
+  {
+    id: "india",
+    image: indiaImg,
+    location: "Rajasthan",
+    country: "India",
+    tag: "Asia",
+    title: "India: Where Every Street Corner Tells a Story",
+    excerpt:
+      "I stepped off the train in Jaisalmer as the sun was setting, and the sandstone fort glowed like a ember. The chaos, the colour, the spices hanging in the evening air — India doesn't ease you in. It grabs you by the hand and pulls you into a world unlike any other.",
+    date: "February 10, 2024",
+    readTime: "8 min read",
+  },
+  {
+    id: "dubai",
+    image: dubaiImg,
+    location: "Dubai",
+    country: "UAE",
+    tag: "Middle East",
+    title: "Dubai After Dark: A City That Never Stops Dazzling",
+    excerpt:
+      "Standing at the foot of the Burj Khalifa as it erupted in lights, I realised Dubai is not a city — it's a statement. Everything here is deliberately, beautifully excessive. I came sceptical and left completely converted. The desert city won me over.",
+    date: "June 5, 2024",
+    readTime: "6 min read",
+  },
+  {
+    id: "paris",
+    image: parisImg,
+    location: "Paris",
+    country: "France",
+    tag: "Europe",
+    title: "Paris at Dusk: The City That Refuses to Disappoint",
+    excerpt:
+      "I was certain Paris would be overrated. Millions of photos, a thousand movies, endless hype — surely the real thing couldn't match it. And then the Eiffel Tower lit up at twilight while I sat on the Trocadéro steps with a croissant, and I had to admit: every cliché was earned.",
+    date: "October 18, 2024",
+    readTime: "7 min read",
+  },
+  {
+    id: "srilanka",
+    image: srilankaImg,
+    location: "Sigiriya",
+    country: "Sri Lanka",
+    tag: "South Asia",
+    title: "Sri Lanka: The Island That Stole My Heart",
+    excerpt:
+      "I climbed Sigiriya Rock at sunrise, lungs burning, legs protesting. When I finally reached the summit, the jungle spread below me like a green ocean, mist drifting through the valleys. Sri Lanka is small on a map, but enormous in the way it makes you feel.",
+    date: "March 22, 2025",
+    readTime: "8 min read",
+  },
+  {
+    id: "japan",
+    image: kyotoImg,
+    location: "Kyoto",
+    country: "Japan",
+    tag: "Asia",
+    title: "Sakura Season in Kyoto: When Japan Blooms Pink",
+    excerpt:
+      "I arrived on a Tuesday in late March not knowing that the cherry blossoms would peak that very weekend. The city transformed overnight — every canal, every shrine wrapped in a soft pink haze that made even the most cynical traveller stop and stare.",
+    date: "April 2, 2024",
+    readTime: "7 min read",
+  },
+];
+
+const Index = () => {
+  return (
+    <div className="min-h-screen bg-background">
+      <Navbar />
+
+      {/* Hero */}
+      <HeroSection />
+
+      {/* Stories Section */}
+      <section id="stories" className="py-24 px-6">
+        <div className="container mx-auto max-w-6xl">
+          <div className="text-center mb-16">
+            <p className="font-body text-terracotta text-sm uppercase tracking-[0.3em] font-semibold mb-3">
+              Trip Diaries
+            </p>
+            <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4">
+              Stories from the Road
+            </h2>
+            <div className="w-16 h-px bg-gold mx-auto mb-6" />
+            <p className="font-body text-muted-foreground text-lg max-w-xl mx-auto leading-relaxed">
+              Five destinations, five seasons, and the lessons that only travel can teach.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {stories.map((story) => (
+              <BlogCard key={story.id} {...story} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* About Section */}
+      <section id="about" className="py-24 px-6 bg-navy">
+        <div className="container mx-auto max-w-3xl text-center">
+          <p className="font-body text-gold text-sm uppercase tracking-[0.3em] font-semibold mb-4">
+            The Traveller
+          </p>
+          <h2 className="font-display text-4xl font-bold mb-6" style={{ color: "hsl(36 33% 97%)" }}>
+            Hello, I'm Lavanya.
+          </h2>
+          <div className="w-16 h-px bg-terracotta mx-auto mb-8" />
+          <p className="font-body text-lg leading-relaxed mb-4" style={{ color: "hsl(36 20% 78%)" }}>
+            I'm a solo traveller, part-time writer, and full-time dreamer. From the golden forts of Rajasthan to the cherry blossoms of Kyoto, every journey has shaped who I am and how I see the world.
+          </p>
+          <p className="font-body text-lg leading-relaxed" style={{ color: "hsl(36 20% 78%)" }}>
+            Wandering Notes is where I put the experiences that refuse to stay silent. Every place changes you a little — these are mine.
+          </p>
+
+          {/* Social links */}
+          <div className="flex items-center justify-center gap-6 mt-10">
+            <a
+              href="#"
+              className="flex items-center gap-2 font-body text-sm font-semibold text-gold hover:text-accent transition-colors"
+            >
+              <Instagram className="w-5 h-5" />
+              Instagram
+            </a>
+            <a
+              href="#"
+              className="flex items-center gap-2 font-body text-sm font-semibold text-gold hover:text-accent transition-colors"
+            >
+              <Twitter className="w-5 h-5" />
+              Twitter
+            </a>
+            <a
+              href="#"
+              className="flex items-center gap-2 font-body text-sm font-semibold text-gold hover:text-accent transition-colors"
+            >
+              <Mail className="w-5 h-5" />
+              Contact
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-foreground py-8 px-6">
+        <div className="container mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-2">
+            <Compass className="w-5 h-5 text-gold" />
+            <span className="font-display text-lg font-semibold" style={{ color: "hsl(36 33% 90%)" }}>
+              Wandering Notes
+            </span>
+          </div>
+          <p className="font-body text-sm" style={{ color: "hsl(36 10% 55%)" }}>
+            © 2025 Wandering Notes · Lavanya's Travel Journal
+          </p>
+        </div>
+      </footer>
+    </div>
+  );
+};
+
+export default Index;
+# HACK-O-WEEK-
