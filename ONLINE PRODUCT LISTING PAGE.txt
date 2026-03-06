@@ -1,0 +1,236 @@
+import { useState } from 'react';
+import { ProductCard, Product } from './components/ProductCard';
+import { Search, Leaf, ShoppingBag } from 'lucide-react';
+import { Input } from './components/ui/input';
+import { Badge } from './components/ui/badge';
+
+const products: Product[] = [
+  {
+    id: 1,
+    name: 'Monstera Deliciosa',
+    category: 'Plants',
+    price: 45.99,
+    image: 'https://images.unsplash.com/photo-1626929252164-27c26d107b00?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb25zdGVyYSUyMHBsYW50fGVufDF8fHx8MTc3MDc3MzM1N3ww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+    rating: 4.8,
+    inStock: true,
+    description: 'Beautiful tropical plant with large, glossy leaves perfect for indoor spaces.',
+  },
+  {
+    id: 2,
+    name: 'Snake Plant',
+    category: 'Plants',
+    price: 29.99,
+    image: 'https://images.unsplash.com/photo-1593482892290-f54927ae1bb6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzbmFrZSUyMHBsYW50fGVufDF8fHx8MTc3MDgzMzY0OHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+    rating: 4.9,
+    inStock: true,
+    description: 'Low-maintenance air-purifying plant, ideal for beginners and busy plant parents.',
+  },
+  {
+    id: 3,
+    name: 'Succulent Collection',
+    category: 'Plants',
+    price: 24.99,
+    image: 'https://images.unsplash.com/photo-1550207477-85f418dc3448?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzdWNjdWxlbnQlMjBwbGFudHxlbnwxfHx8fDE3NzA4MzM2NDh8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+    rating: 4.6,
+    inStock: true,
+    description: 'Variety of colorful succulents in assorted sizes, perfect for small spaces.',
+  },
+  {
+    id: 4,
+    name: 'Boston Fern',
+    category: 'Plants',
+    price: 35.99,
+    image: 'https://images.unsplash.com/photo-1656503512513-c086cd3e0da9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmZXJuJTIwcGxhbnQlMjBpbmRvb3J8ZW58MXx8fHwxNzcwNzczMzU3fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+    rating: 4.5,
+    inStock: true,
+    description: 'Lush green fern that thrives in humid environments, perfect for bathrooms.',
+  },
+  {
+    id: 5,
+    name: 'Potted Indoor Plant',
+    category: 'Plants',
+    price: 39.99,
+    image: 'https://images.unsplash.com/photo-1562351757-66f3589f30cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb3R0ZWQlMjBpbmRvb3IlMjBwbGFudHxlbnwxfHx8fDE3NzA4MTIxMjB8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+    rating: 4.7,
+    inStock: false,
+    description: 'Premium indoor plant in decorative pot, adds instant charm to any room.',
+  },
+  {
+    id: 6,
+    name: 'Ceramic Plant Pot',
+    category: 'Pots',
+    price: 18.99,
+    image: 'https://images.unsplash.com/photo-1629380321590-3b3f75d66dec?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjZXJhbWljJTIwcGxhbnQlMjBwb3R8ZW58MXx8fHwxNzcwODAyMDgwfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+    rating: 4.4,
+    inStock: true,
+    description: 'Modern ceramic planter with drainage hole, available in multiple colors.',
+  },
+  {
+    id: 7,
+    name: 'Terracotta Pots Set',
+    category: 'Pots',
+    price: 32.99,
+    image: 'https://images.unsplash.com/photo-1620293106076-ad27d651efe3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0ZXJyYWNvdHRhJTIwcGxhbnQlMjBwb3R8ZW58MXx8fHwxNzcwODc1NDgzfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+    rating: 4.7,
+    inStock: true,
+    description: 'Classic terracotta pots in various sizes, perfect for succulents and herbs.',
+  },
+  {
+    id: 8,
+    name: 'Hanging Plant Basket',
+    category: 'Pots',
+    price: 27.99,
+    image: 'https://images.unsplash.com/photo-1706890364388-34bad5d8004d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoYW5naW5nJTIwcGxhbnQlMjBiYXNrZXR8ZW58MXx8fHwxNzcwODc1NDg1fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+    rating: 4.5,
+    inStock: true,
+    description: 'Elegant hanging basket with macramé design, ideal for trailing plants.',
+  },
+  {
+    id: 9,
+    name: 'Cactus Planter',
+    category: 'Pots',
+    price: 15.99,
+    image: 'https://images.unsplash.com/photo-1660490272837-d33d73b9baa3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjYWN0dXMlMjBwbGFudCUyMHBvdHxlbnwxfHx8fDE3NzA4NzU0ODV8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+    rating: 4.6,
+    inStock: true,
+    description: 'Minimalist concrete planter designed specifically for cacti and succulents.',
+  },
+  {
+    id: 10,
+    name: 'Organic Plant Fertilizer',
+    category: 'Fertilizers',
+    price: 12.99,
+    image: 'https://images.unsplash.com/photo-1768264312532-7780b660b74a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwbGFudCUyMGZlcnRpbGl6ZXIlMjBvcmdhbmljfGVufDF8fHx8MTc3MDgwMjc4NHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+    rating: 4.8,
+    inStock: true,
+    description: 'All-natural organic fertilizer that promotes healthy growth for all plant types.',
+  },
+  {
+    id: 11,
+    name: 'Premium Potting Soil',
+    category: 'Nursery',
+    price: 16.99,
+    image: 'https://images.unsplash.com/photo-1597868067401-935985cff5be?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxnYXJkZW5pbmclMjBzb2lsfGVufDF8fHx8MTc3MDg3NTQ4NHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+    rating: 4.7,
+    inStock: true,
+    description: 'Rich, nutrient-packed soil mix ideal for indoor and outdoor container plants.',
+  },
+];
+
+type Category = 'All' | 'Plants' | 'Pots' | 'Fertilizers' | 'Nursery';
+
+const categories: Category[] = ['All', 'Plants', 'Pots', 'Fertilizers', 'Nursery'];
+
+export default function App() {
+  const [selectedCategory, setSelectedCategory] = useState<Category>('All');
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const filteredProducts = products.filter((product) => {
+    const matchesCategory = selectedCategory === 'All' || product.category === selectedCategory;
+    const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         product.description.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-emerald-50 to-white">
+      {/* Header */}
+      <header className="bg-white shadow-sm sticky top-0 z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center gap-3">
+              <div className="bg-emerald-600 p-2 rounded-lg">
+                <Leaf className="w-8 h-8 text-white" />
+              </div>
+              <div>
+                <h1 className="text-3xl text-emerald-800">GreenHaven Nursery</h1>
+                <p className="text-sm text-gray-600">Your one-stop shop for all things green</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-4">
+              <Badge variant="outline" className="text-emerald-700 border-emerald-300 px-4 py-2">
+                <ShoppingBag className="w-4 h-4 mr-2" />
+                Cart (0)
+              </Badge>
+            </div>
+          </div>
+
+          {/* Search Bar */}
+          <div className="relative max-w-md">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+            <Input
+              type="text"
+              placeholder="Search plants, pots, fertilizers..."
+              className="pl-10"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
+        </div>
+      </header>
+
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Category Filter */}
+        <div className="mb-8">
+          <h2 className="text-xl text-gray-800 mb-4">Categories</h2>
+          <div className="flex flex-wrap gap-3">
+            {categories.map((category) => (
+              <button
+                key={category}
+                onClick={() => setSelectedCategory(category)}
+                className={`px-6 py-2 rounded-full transition-all ${
+                  selectedCategory === category
+                    ? 'bg-emerald-600 text-white shadow-md'
+                    : 'bg-white text-gray-700 hover:bg-emerald-50 border border-gray-200'
+                }`}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Product Count */}
+        <div className="mb-6">
+          <p className="text-gray-600">
+            Showing <span className="font-semibold text-emerald-700">{filteredProducts.length}</span> products
+          </p>
+        </div>
+
+        {/* Product Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
+          {filteredProducts.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
+
+        {/* Empty State */}
+        {filteredProducts.length === 0 && (
+          <div className="text-center py-16">
+            <div className="text-gray-400 mb-4">
+              <Search className="w-16 h-16 mx-auto" />
+            </div>
+            <h3 className="text-xl text-gray-600 mb-2">No products found</h3>
+            <p className="text-gray-500">Try adjusting your search or filter criteria</p>
+          </div>
+        )}
+      </main>
+
+      {/* Footer */}
+      <footer className="bg-emerald-900 text-white py-8 mt-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="flex items-center justify-center gap-2 mb-4">
+            <Leaf className="w-6 h-6" />
+            <span className="text-xl">GreenHaven Nursery</span>
+          </div>
+          <p className="text-emerald-200 text-sm">
+            Quality plants and gardening supplies since 2020
+          </p>
+          <p className="text-emerald-300 text-xs mt-4">
+            © 2026 GreenHaven Nursery. All rights reserved.
+          </p>
+        </div>
+      </footer>
+    </div>
+  );
+}
